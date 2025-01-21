@@ -19,8 +19,25 @@ const regexCounter = (data) => {
     return matches.length;
 }
 
+const domainCounter = (data) => {
+    const re = /\w[\w\.]+\w@((\w+\.\w+)+)(?=\s)/g;
+    const matches = [...data.matchAll(re)];
+    const domains = {};
+    for (const match of matches) {
+        const domain = match[1];
+        if (domains[domain] !== undefined) {
+            domains[domain] += 1;
+        } else {
+            domains[domain] = 1;
+        }
+    }
+    return domains;
+}
+
 const data = getFileContents();
 const naiveCount = naiveCounter(data);
 const regexCount = regexCounter(data);
+const domains = domainCounter(data);
 console.log(`Naive count of softwire.com: ${naiveCount}`);
 console.log(`Regex count of softwire.com: ${regexCount}`);
+console.log(domains);
