@@ -13,6 +13,14 @@ const naiveCounter = (data) => {
     return counter
 }
 
+const regexCounter = (data) => {
+    const re = /\b[\w\.]{3}\w*@softwire.com\b/g;
+    const matches = [...data.matchAll(re)];
+    return matches.length;
+}
+
 const data = getFileContents();
-const count = naiveCounter(data);
-console.log(count);
+const naiveCount = naiveCounter(data);
+const regexCount = regexCounter(data);
+console.log(`Naive count of softwire.com: ${naiveCount}`);
+console.log(`Regex count of softwire.com: ${regexCount}`);
